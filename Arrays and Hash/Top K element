@@ -1,0 +1,27 @@
+"""
+Given an integer array nums and an integer k, return the k most frequent elements within the array.
+
+The test cases are generated such that the answer is always unique.
+
+You may return the output in any order.
+
+Example 1:
+
+Input: nums = [1,2,2,3,3,3], k = 2
+
+Output: [2,3]
+"""
+
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        count = {}
+
+        # Count how many times each number appears
+        for num in nums:
+            count[num] = count.get(num, 0) + 1
+
+        # Sort numbers based on their frequency, highest first
+        sorted_nums = sorted(count, key=count.get, reverse=True)
+
+        # Return the first k most frequent numbers
+        return sorted_nums[:k]
