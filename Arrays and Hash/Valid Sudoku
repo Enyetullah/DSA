@@ -1,0 +1,46 @@
+"""
+You are given a 9 x 9 Sudoku board board. A Sudoku board is valid if the following rules are followed:
+
+Each row must contain the digits 1-9 without duplicates.
+Each column must contain the digits 1-9 without duplicates.
+Each of the nine 3 x 3 sub-boxes of the grid must contain the digits 1-9 without duplicates.
+Return true if the Sudoku board is valid, otherwise return false
+
+Note: A board does not need to be full or be solvable to be valid.
+"""
+
+
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        rows = [set() for _ in range(9)]
+        cols = [set() for _ in range(9)]
+        boxes = [set() for _ in range(9)]
+
+        for r in range(9):
+            for c in range(9):
+                value = board[r][c]
+
+                # Skip empty cells
+                if value == ".":
+                    continue
+
+                # Find which 3x3 box this cell belongs to
+                box_index = (r // 3) * 3 + (c // 3)
+
+                # If value already exists in the row, column, or box,
+                # then the board is invalid
+                if value in rows[r]:
+                    return False
+
+                if value in cols[c]:
+                    return False
+
+                if value in boxes[box_index]:
+                    return False
+
+                # Add value to the row, column, and box sets
+                rows[r].add(value)
+                cols[c].add(value)
+                boxes[box_index].add(value)
+
+        return True
